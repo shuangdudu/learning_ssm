@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -22,6 +24,8 @@ import com.miaomiao.it.learning.entity.ProcedurePojo;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/spring-dao.xml")
 public class Test1 {
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	private EmpDao dao;
 
@@ -29,6 +33,9 @@ public class Test1 {
 	public void testAllEmp() {
 		List<Emp> emp = dao.findAllEmp();
 		System.out.println(emp);
+		if(null!=emp){
+			log.info("---------------------------->"+"   ok!");
+		}
 		for (Emp p : emp) {
 			System.out.println(p);
 		}

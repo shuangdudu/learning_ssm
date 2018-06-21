@@ -29,7 +29,7 @@
 	
 <servlet>
 
-	<servlet-name>springmvc</servlet-name>
+	<servlet-name>springweb</servlet-name>
 	<servlet-class>
 		org.springframework.web.servlet.DispatcherServlet
 	</servlet-class>
@@ -40,7 +40,7 @@
 	<load-on-startup>1</load-on-startup>
 </servlet>
 	<servlet-mapping>
-		<servlet-name>springmvc</servlet-name>
+		<servlet-name>springweb</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 </web-app>

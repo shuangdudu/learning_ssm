@@ -1,6 +1,8 @@
 package com.miaomiao.it.learning.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -23,8 +25,13 @@ public class EmpController {
 	@RequestMapping("/findEmp.do")	
 	public String find(Model model){
 //		List<Emp> emps = empService.searchAllEmp();
-		List<Emp> emps = dao.findAllEmp();
-		model.addAttribute("emps",emps);
+		List<Emp> list = dao.findAllEmp();
+		model.addAttribute("emps",list);
 		return "emp_list";
+	}
+	@RequestMapping("/reqParameter.do")
+	public Map<String,Object>testRequestParameter(Emp emp){
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		return resultMap;
 	}
 }
