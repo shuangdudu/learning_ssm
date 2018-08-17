@@ -137,5 +137,105 @@
  ${}表示拼接字符串，通过${}可以将parameterType传入的类容拼接在sql中且不进行jdbc类型转换，
  ${}可以接受简单类型值或pojo属性值，如果parameterType传输单个简单类型值，${}括号中只能是value
  -->
-
+	<delete id="batchDelete" parameterType="java.util.List">
+		begin
+		<foreach collection="list" item="boqID">
+			delete from prj_boqauthinfo t where  t.boqid = #{boqID,jdbcType=DECIMAL};
+		</foreach>
+		end;
+	</delete>
+	<insert id="insert" parameterType="java.util.List">
+		begin
+		<foreach collection="list" item="boqvo">
+			insert into prj_boqauthinfo(boqid,typeid,optvalue) values(
+				#{boqvo.boqID,jdbcType=DECIMAL},
+				#{boqvo.typeID,jdbcType=DECIMAL},
+				#{boqvo.optValue,jdbcType=DECIMAL}				
+			);
+		</foreach>
+		end;
+	</insert>
+	<select id="findLeftOperatorList" resultType="BoqInfoVO">
+		select b.* from (select rownum no,<trim suffixOverrides=",">a.operatorid as operatorId,a.operatorcode as operatorCode,
+			<choose>
+				<when test='_parameter.get("0")=="CN"'>
+					a.chsname as operatorChsName,
+				</when>
+				<otherwise>
+					a.engname as operatorChsName,
+				</otherwise>
+			</choose>
+		</trim> from d_operator a where a.countrycode=#{0} and available = 1
+			<if test='_parameter.get("3")!=null and _parameter.get("3")!=""'>
+				<choose>
+					<when test='_parameter.get("0")=="CN"'>
+						and upper(a.chsname) not like CONCAT(CONCAT('%',upper(#{3})),'%')
+					</when>
+					<otherwise>
+						upper(a.engname) not like CONCAT(CONCAT('%',upper(#{3})),'%')
+					</otherwise>
+				</choose>
+			</if>
+			and rownum <![CDATA[<=]]>#{2}
+		)b where no <![CDATA[>=]]>#{1}
+		order by 
+		<choose>
+			<when test='_parameter.get("0")=="CN"'>
+				b.operatorChsName
+			</when>
+			<otherwise>
+				b.operatorEngName
+			</otherwise>
+		</choose>	
+	</select>
+	<select id="findOperatorListByPage" resultType="BoqInfoVO">
+		select b.* from (
+			select rownum no,
+			<trim suffixOverrides=",">
+				a.operatorid as operatorId,
+				a.operatorcode as operatorCode,
+				<choose>
+					<when test='_parameter.get("3")=="CN"'>
+						a.chsname as operatorChsName,
+					</when>
+					<otherwise>
+						a.engname as operatorEngName,
+					</otherwise>
+				</choose>
+			</trim>
+			from d_operator a where a.countrycode=#{3} and a.available =1
+			<if test='_parameter.get("0")!=null and _parameter.get("0")!=""'>
+				<choose>
+					<when test='_parameter.get("3")=="CN"'>
+						and upper(a.chsname) like CONCAT(CONCAT('%',#{0}),'%')
+					</when>
+					<otherwise>
+						and upper(a.engname) like CONCAT(CONCAT('%',#{0}),'%')
+					</otherwise>
+				</choose>
+			</if>
+			and rownum <![CDATA[<=]]>#{2})b
+			where no <![CDATA[>=]]>#{1} order by 
+			<choose>
+				<when test='_parameter.get("3")=="CN"'>
+					b.operatorChsName
+				</when>
+				<otherwise>
+					b.operatorEngName
+				</otherwise>
+			</choose>
+		
+	</select>
+	
+	<select id="copyBoq" parameterType="java.util.Map" statementType="CALLABLE">
+		call PKG.copyBoq(
+		#{boqId,jdbcType=NUMERIC,mode=IN},
+		#{copyType,jdbcType=NUMERIC,mode=IN},
+		#{shareRemark,jdbcType=CLOB,mode=IN}
+		);
+	</select>
+	
+	
+	
+	
 </mapper>

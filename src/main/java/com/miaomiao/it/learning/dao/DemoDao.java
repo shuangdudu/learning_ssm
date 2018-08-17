@@ -21,4 +21,9 @@ public interface DemoDao {
 			@Param("siteName")String siteName,
 			@Param("dimensionProductTypeID")int dimensionProductTypeID,
 			@Param("qtyTpye")int qtyTpye);
+//	public List<BoqAuthInfoVO> findBoqAuthInfo(Map<String,Object> map);
+//	public void insert(List<BoqAuthInfoVO>authInfoVOs);
+//	public List<BoqInfoVO> findLeftOperatorList(String countryCode,Integer startIndex,Integer endIndex,String customerName);
+//	public List<BoqInfoVo> findOperatorListByPage(String customerName,Integer startIndex,Integer endIndex,String countryCode);
+//	public void copyBoq(Map<String,Object> map);
 }

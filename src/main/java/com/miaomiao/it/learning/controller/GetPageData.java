@@ -20,11 +20,8 @@ public class GetPageData {
 @RequestMapping("/getdata.do")
 @ResponseBody
 public Map<String,Object> getdata(HttpServletRequest request,HttpServletResponse response){
-	logger.error("===========>"+"进入了getdata方法:");
 	Map<String,Object> map = new HashMap<String, Object>();
 	String parameter1 = request.getParameter("data");
-	logger.info("============>"+parameter1);
-//	System.out.println("=====>"+parameter1);
 	if(parameter1 == null){
 		map.put("result", "error");
 	}else{
