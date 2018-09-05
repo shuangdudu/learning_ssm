@@ -110,7 +110,7 @@
 		UNISCT.prj_productcfgmodelbase bs on a.configurationmodelid = bs.configurationmodelid
 		where b.manualvalue is not null
 		<if test="moduleCodes!=null">and a.modulecode in
-		<foreach collection="moduleCodes" item="moduleCode" open="()" close=")">
+		<foreach collection="moduleCodes" item="moduleCode" open="(" close=")">
 		#{moduleCode,jdbcType=VARCHAR}
 		</foreach>
 		</if>
