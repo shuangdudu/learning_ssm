@@ -16,6 +16,7 @@
 		select * from emp 
 		<if test='_parameter!=null and _parameter!=""'>where deptno = #{deptno}</if>	
 	</select>
+
 	<select id="findBySalary" parameterType="com.miaomiao.it.learning.entity.Emp" resultType="com.miaomiao.it.learning.entity.Emp">
 		select * from emp
 		<choose>
