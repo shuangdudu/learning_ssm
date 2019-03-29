@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * @author xiaoshuang
+ * 金额转繁体
+ */
 public class DataTransfer {
 	public static String numTransFanTi(String amount){
 		//定义转换后的单位
